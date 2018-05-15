@@ -1,0 +1,12 @@
+{
+  "name": "node-test-terminal",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "terminal-kit": "^1.15.5"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "prod": "node src/index.js"
+  }
+}

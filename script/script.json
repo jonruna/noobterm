@@ -1,0 +1,51 @@
+{
+  "name": "COMMAND CENTER",
+  "showDefaultCommand": true,
+  "commands": [
+    {
+      "name": "Git",
+      "commands": [
+        {
+          "name": "Status",
+          "cmd": "git status"
+        }
+      ]
+    },
+    {
+      "name": "File",
+      "commands": [
+        {
+          "name": "List",
+          "cmd": "ls -l"
+        }
+      ]
+    },
+    {
+      "name": "Script",
+      "commands": [
+        {
+          "name": "Create",
+          "cmd": "echo TODO: Start creating a script.json with a CLI wizard!"
+        }
+      ]
+    },
+    {
+      "name": "Docker",
+      "commands": [
+        {
+          "name": "List",
+          "cmd": "docker-compose ps"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "commands": [
+        {
+          "name": "What other?",
+          "cmd": "echo THE other!"
+        }
+      ]
+    }
+  ]
+}
