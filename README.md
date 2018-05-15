@@ -22,3 +22,7 @@ function noobterm {
   node NOOBTERM_FOLDER/src/index.js
 }
 ```
+
+## my own commands
+
+If you set an enviroment variable called `NOOBTERM_SCRIPT_FILE` to a path of a `.json` file then those commands will always be displayed when running noobterm. This way you can store your general commands in the `.json` file and always have access to them.
