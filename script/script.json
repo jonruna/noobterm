@@ -8,12 +8,20 @@
         {
           "name": "Status",
           "cmd": "git status"
+        },
+        {
+          "name": "Diff",
+          "cmd": "git diff"
         }
       ]
     },
     {
       "name": "File",
       "commands": [
+        {
+          "name": "History add item",
+          "cmd": "history -s echo THIS IS NOT WORKING"
+        },
         {
           "name": "List",
           "cmd": "ls -l"

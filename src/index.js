@@ -113,7 +113,7 @@ function appendCommandsFromDir(commandsDir) {
       ) {
         const scriptCommand = {
           name: commandsDir.substring(9) + filePath,
-          cmd: readFile(commandsDir + filePath)
+          cmd: `sh ${commandsDir + filePath}`
         }
         cmds.commands[0].commands.push(scriptCommand)
       }
@@ -139,19 +139,16 @@ function execute(noobScript) {
       }
     )
   } else if (noobScript.cmd) {
-    term.green('\n' + noobScript.cmd)
-    const { exec } = require('child_process')
-    exec(noobScript.cmd, (error, stdout, stderr) => {
-      if (error) {
-        term.red('\nERROR: ' + error + '\n')
-      } else {
-        term(`\n${stdout}`)
-        if (stderr) {
-          term.red(`\nstderr: ${stderr}\n`)
-        }
-      }
-      process.exit()
-    })
+    term.green(`\n${noobScript.cmd}\n`)
+    const { execSync } = require('child_process')
+    const execOptions = {
+      stdio: 'inherit'
+    }
+    const execData = execSync(noobScript.cmd, execOptions)
+    if (execData) {
+      term(`${execData}`)
+    }
+    process.exit()
   } else {
     term.red('\nCORRUPT: ' + noobScript + '\n')
     process.exit()
