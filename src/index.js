@@ -132,7 +132,20 @@ function execute(noobScript) {
       Array.from(noobScript.commands, x => x.name),
       {
         style: term.white,
-        selectedStyle: term.magenta
+        selectedStyle: term.magenta,
+        keyBindings: {
+          ' ': 'submit',
+          ENTER: 'submit',
+          KP_ENTER: 'submit',
+          LEFT: 'previous',
+          RIGHT: 'next',
+          UP: 'previousPage',
+          DOWN: 'nextPage',
+          TAB: 'cycleNext',
+          SHIFT_TAB: 'cyclePrevious',
+          HOME: 'first',
+          END: 'last'
+        }
       },
       (error, response) => {
         execute(noobScript.commands[response.selectedIndex])
