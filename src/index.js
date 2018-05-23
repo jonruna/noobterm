@@ -7,12 +7,14 @@ const projectScriptDirectory = './script/'
 const projectScriptFile = './script/script.json'
 const envScriptFile = process.env.NOOBTERM_SCRIPT_FILE
 
+let envScriptName
 let scriptLoadMsg
 let cmdsJSON
 if (fs.existsSync(projectScriptFile)) {
   cmdsJSON = JSON.parse(readFile(projectScriptFile))
   if (envScriptFile) {
     const envCmdsJSON = JSON.parse(readFile(envScriptFile))
+    envScriptName = envCmdsJSON.name
     envCmdsJSON.name = `{${envCmdsJSON.name}}`
     cmdsJSON.commands.push(envCmdsJSON)
     scriptLoadMsg = `${projectScriptFile}`
@@ -22,6 +24,7 @@ if (fs.existsSync(projectScriptFile)) {
 } else {
   if (envScriptFile) {
     cmdsJSON = JSON.parse(readFile(envScriptFile))
+    envScriptName = 'NOOBTERM_SCRIPT_FILE'
     scriptLoadMsg = ''
   } else {
     scriptLoadMsg = `DEFAULT`
@@ -37,7 +40,10 @@ const cmds = cmdsJSON
 
 term.on('key', (name, matches, data) => {
   if (name === 'CTRL_C') {
-    term.red('\nCTRL + C = EXIT\n')
+    term.down(1)
+    term.left(1000)
+    term.deleteLine(10)
+    term.red('CTRL + C = EXIT\n')
     process.exit()
   }
 })
@@ -86,10 +92,11 @@ if (cmds.showDefaultCommand) {
 }
 
 if (cmds.name) {
-  term.magenta(cmds.name).dim(` ${scriptLoadMsg}`)
+  term.brightCyan(cmds.name).dim(` ${scriptLoadMsg}`)
   if (envScriptFile) {
-    term.dim.yellow(' NOOBTERM_SCRIPT_FILE')
+    term.dim.yellow(` ${envScriptName}`)
   }
+  term('\n')
 }
 
 execute(cmds)
@@ -128,24 +135,18 @@ function appendCommandsFromDir(commandsDir) {
 
 function execute(noobScript) {
   if (noobScript.commands) {
-    term.singleLineMenu(
+    //term.up(1)
+    term.gridMenu(
       Array.from(noobScript.commands, x => x.name),
       {
         style: term.white,
-        selectedStyle: term.magenta,
-        keyBindings: {
-          ' ': 'submit',
-          ENTER: 'submit',
-          KP_ENTER: 'submit',
-          LEFT: 'previous',
-          RIGHT: 'next',
-          UP: 'previousPage',
-          DOWN: 'nextPage',
-          TAB: 'cycleNext',
-          SHIFT_TAB: 'cyclePrevious',
-          HOME: 'first',
-          END: 'last'
-        }
+        selectedStyle: term.brightCyan,
+        leftPadding: ' ',
+        rightPadding: ' ',
+        selectedLeftPadding: ' ',
+        selectedRightPadding: ' ',
+        itemMaxWidth: 24,
+        width: 80
       },
       (error, response) => {
         execute(noobScript.commands[response.selectedIndex])
