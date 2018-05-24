@@ -135,25 +135,19 @@ function appendCommandsFromDir(commandsDir) {
 
 function execute(noobScript) {
   if (noobScript.commands) {
-    //term.up(1)
+    term.up(1)
     term.gridMenu(
       Array.from(noobScript.commands, x => x.name),
       {
         style: term.white,
-        selectedStyle: term.brightCyan,
-        leftPadding: ' ',
-        rightPadding: ' ',
-        selectedLeftPadding: ' ',
-        selectedRightPadding: ' ',
-        itemMaxWidth: 24,
-        width: 80
+        selectedStyle: term.brightCyan
       },
       (error, response) => {
         execute(noobScript.commands[response.selectedIndex])
       }
     )
   } else if (noobScript.cmd) {
-    term.green(`\n${noobScript.cmd}\n`)
+    term.green(`${noobScript.cmd}\n`)
     const { execSync } = require('child_process')
     const execOptions = {
       stdio: 'inherit'
